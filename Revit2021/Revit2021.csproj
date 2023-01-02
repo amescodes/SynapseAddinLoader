@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\SynapseAddinLoader.props" />
+  <Import Project="..\SynapseAddinLoader\SynapseAddinLoader.projitems" Label="Shared" />
+
+  <PropertyGroup>
+    <TargetFrameworks>net48</TargetFrameworks>
+    <DefineConstants>REVIT2021</DefineConstants>
+    <RevitVersion>2021</RevitVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('WINFORMS'))">
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+</Project>

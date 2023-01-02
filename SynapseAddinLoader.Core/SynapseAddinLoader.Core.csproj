@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2021.1.40.95" />
+    <PackageReference Include="Synapse.Client" Version="0.1.1-dependabot-nuge-0001" />
+    <PackageReference Include="Synapse.Revit" Version="0.1.1-dependabot-nuge-0001" />
+  </ItemGroup>
+
+</Project>

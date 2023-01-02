@@ -1,0 +1,36 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<Configurations>Debug;Release</Configurations>
+		<RuntimeIdentifiers>win</RuntimeIdentifiers>
+		<PlatformTarget>x64</PlatformTarget>
+		<Platforms>x64</Platforms>
+		<!-- Ignore architecture-related problems -->
+		<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+		<!-- Invert the behavior of new .csproj format - exclude files by default -->
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+		<EnableDefaultItems>false</EnableDefaultItems>
+		<!-- Define handy symbols to use in the code in order to accommodate different Revit versions,
+    e.g. by wrapping legacy / deprecated API calls with #if REVIT2014 | REVIT2015 -->
+		<PreprocessorDefinitions>$(DefineConstants);DEBUG</PreprocessorDefinitions>
+		<!-- Multiple targets can cause obj folder locking lby concurrent builds -->
+		<BuildInParallel>false</BuildInParallel>
+		<DebugType>full</DebugType>
+
+		<AssemblyName>SynapseAddinLoader</AssemblyName>
+		<RootNamespace>SynapseAddinLoader</RootNamespace>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autodesk.Revit.SDK" Version="$(RevitVersion).*" />
+		<PackageReference Include="Revit.Async" Version="2.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SynapseAddinLoader.Core\SynapseAddinLoader.Core.csproj" />
+		<ProjectReference Include="..\SynapseAddinLoader.UI\SynapseAddinLoader.UI.csproj" />
+	</ItemGroup>
+
+</Project>
