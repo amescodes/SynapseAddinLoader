@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using MaterialDesignColors;
-using MaterialDesignThemes.Wpf;
+
+using SynapseAddinLoader.Core;
+
 using Microsoft.Xaml.Behaviors;
 
-namespace SynapseAddinLoader
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
+
+namespace SynapseAddinLoader.UI
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
@@ -37,6 +31,12 @@ namespace SynapseAddinLoader
             _ = new Card();
             _ = new Hue("Dummy", Colors.Black, Colors.White);
             _ = Interaction.GetBehaviors(this);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            App.ShutdownSynapseClient();
+            base.OnClosed(e);
         }
     }
 }

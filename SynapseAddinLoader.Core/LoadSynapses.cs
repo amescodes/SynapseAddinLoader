@@ -13,11 +13,11 @@ using Autodesk.Revit.UI;
 
 namespace SynapseAddinLoader.Core
 {
-    public class LoadSynapsesFromAssemblyRequest
+    public class LoadSynapses
     {
         private string assemblyPath;
 
-        public LoadSynapsesFromAssemblyRequest(string assemblyPath)
+        public LoadSynapses(string assemblyPath)
         {
             this.assemblyPath = assemblyPath;
         }
@@ -29,16 +29,21 @@ namespace SynapseAddinLoader.Core
                 throw new FileNotFoundException("Assembly not found at location.", assemblyPath);
             }
 
-            Assembly assemblyFromPath = LoadAssembly(assemblyPath);
+            ResolveAssembly resolveAssembly = new ResolveAssembly(Path.GetDirectoryName(assemblyPath));
+            resolveAssembly.AddResolveAssemblyHandler();
+
+            Assembly assemblyFromPath = resolveAssembly.LoadFromPath(assemblyPath);
             IList<Type> foundSynapseTypes = GetSynapseTypesFromAssembly(assemblyFromPath);
 
             IList<Synapse> synapses = new List<Synapse>();
             foreach (Type synapseType in foundSynapseTypes)
             {
-                IRevitSynapse synapseToRegister = ConstructTemporaryRevitSynapse(uiapp,synapseType);
+                IRevitSynapse synapseToRegister = ConstructTemporaryRevitSynapse(uiapp, synapseType);
                 string synapseId = synapseType.GetRuntimeProperty(nameof(IRevitSynapse.Id)).GetValue(synapseToRegister) as string;
                 synapses.Add(new Synapse(assemblyPath, synapseId, synapseType));
             }
+
+            resolveAssembly.RemoveResolveAssemblyHandler();
 
             return synapses;
         }
@@ -53,22 +58,6 @@ namespace SynapseAddinLoader.Core
             }
 
             return foundSynapses;
-        }
-
-        private Assembly LoadAssembly(string filePath)
-        {
-            Assembly result = null;
-            try
-            {
-                Monitor.Enter(this);
-                result = Assembly.LoadFile(filePath);
-            }
-            finally
-            {
-                Monitor.Exit(this);
-            }
-
-            return result;
         }
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
@@ -6,9 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AssemblyResolve.cs" />
+    <Compile Remove="RunSynapseMethodInRevitRequest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autodesk.Revit.SDK" Version="2021.1.40.95" />
-    <PackageReference Include="Synapse.Client" Version="0.1.1-dependabot-nuge-0001" />
-    <PackageReference Include="Synapse.Revit" Version="0.1.1-dependabot-nuge-0001" />
+    <PackageReference Include="Synapse.Revit" Version="0.1.1-alpha0037" />
+    <PackageReference Include="Synapse.Client" Version="0.1.1-alpha0037" />
   </ItemGroup>
 
 </Project>

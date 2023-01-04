@@ -13,8 +13,6 @@ namespace SynapseAddinLoader.Core
 {
     public class Common
     {
-        public static UIApplication UiApplication { get; set; }
-
         public static IRevitSynapse ConstructTemporaryRevitSynapse(UIApplication uiapp, Type synapseType)
         {
             IRevitSynapse temporarySynapseToParse = null;
@@ -41,5 +39,6 @@ namespace SynapseAddinLoader.Core
 
             return temporarySynapseToParse;
         }
+
     }
 }

@@ -17,12 +17,12 @@ namespace SynapseAddinLoader.UI
 
         public SynapseInventoryControlViewModel InventoryControl { get; }
 
-        public MainWindowViewModel(string windowName, SynapseClient synapseClient) : this(windowName, synapseClient, new List<SynapseViewModel>()) { }
+        public MainWindowViewModel(string windowName) : this(windowName, new List<SynapseViewModel>()) { }
         
-        public MainWindowViewModel(string windowName, SynapseClient synapseClient, IEnumerable<SynapseViewModel> synapses)
+        public MainWindowViewModel(string windowName, IEnumerable<SynapseViewModel> synapses)
         {
             WindowName = windowName;
-            InventoryControl = new SynapseInventoryControlViewModel(synapseClient,synapses);
+            InventoryControl = new SynapseInventoryControlViewModel(synapses);
         }
     }
 }

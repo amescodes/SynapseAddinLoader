@@ -32,10 +32,10 @@ namespace SynapseAddinLoader.UI.SynapseInventory
         
         public ICommand OnSynapseSelectionChangedCommand => new RelayCommand(UpdateSelectedSynapse);
 
-        public SynapseInventoryControlViewModel(SynapseClient synapseClient, IEnumerable<SynapseViewModel> synapses)
+        public SynapseInventoryControlViewModel(IEnumerable<SynapseViewModel> synapses)
         {
             Synapses = new ObservableCollection<SynapseViewModel>(synapses);
-            SynapseMethodPlayer = new SynapseMethodPlayerControlViewModel(synapseClient);
+            SynapseMethodPlayer = new SynapseMethodPlayerControlViewModel();
         }
 
         private void UpdateSelectedSynapse(object obj)
@@ -82,7 +82,7 @@ namespace SynapseAddinLoader.UI.SynapseInventory
                 return;
             }
 
-            UIApplication uiapp = Common.UiApplication;
+            UIApplication uiapp = App.UiApplication;
             IList<SynapseViewModel> synapsesFromAssembly = ParseSynapsesFromAssembly(uiapp, assemblyPath);
             foreach (SynapseViewModel synapseViewModel in synapsesFromAssembly)
             {
@@ -107,7 +107,7 @@ namespace SynapseAddinLoader.UI.SynapseInventory
 
                     Synapses.Insert(insertionIndex, synapseViewModel);
                 }
-                catch
+                catch (Exception ex)
                 {
                     //todo log error
                 }
@@ -116,8 +116,8 @@ namespace SynapseAddinLoader.UI.SynapseInventory
 
         private IList<SynapseViewModel> ParseSynapsesFromAssembly(UIApplication uiapp, string assemblyPath)
         {
-            LoadSynapsesFromAssemblyRequest loadSynapsesFromAssemblyRequest = new LoadSynapsesFromAssemblyRequest(assemblyPath);
-            IList<Core.Synapse> synapsesFromFile = loadSynapsesFromAssemblyRequest.GetSynapsesFromFile(uiapp);
+            LoadSynapses loadSynapses = new LoadSynapses(assemblyPath);
+            IList<Core.Synapse> synapsesFromFile = loadSynapses.GetSynapsesFromFile(uiapp);
 
             IList<SynapseViewModel> synapseViewModels = new List<SynapseViewModel>();
             foreach (Core.Synapse synapse in synapsesFromFile)

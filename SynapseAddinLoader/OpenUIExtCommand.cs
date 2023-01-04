@@ -24,8 +24,7 @@ namespace SynapseAddinLoader
     [Regeneration(RegenerationOption.Manual)]
     public class OpenUIExtCommand : IExternalCommand
     {
-        private MainWindow synapseAddinLoaderWindow;
-        private SynapseClient synapseClient;
+        private static MainWindow synapseAddinLoaderWindow;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -36,13 +35,11 @@ namespace SynapseAddinLoader
                 RevitTask.Initialize(commandData.Application);
 
                 string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
-                synapseClient = SynapseClient.StartSynapseClient();
+                
                 synapseAddinLoaderWindow = new MainWindow()
                 {
-                    DataContext = new MainWindowViewModel($"Synapse Addin Loader v{assemblyVersion}", synapseClient)
+                    DataContext = new MainWindowViewModel($"Synapse Addin Loader v{assemblyVersion}")
                 };
-                synapseAddinLoaderWindow.Closing += SynapseAddinLoaderWindowOnClosing;
 
                 synapseAddinLoaderWindow.Show();
             }
@@ -53,12 +50,6 @@ namespace SynapseAddinLoader
             }
 
             return Result.Succeeded;
-        }
-
-        private void SynapseAddinLoaderWindowOnClosing(object sender, CancelEventArgs e)
-        {
-            synapseClient.Shutdown();
-            synapseAddinLoaderWindow.Closing -= SynapseAddinLoaderWindowOnClosing;
         }
     }
 }
