@@ -28,8 +28,8 @@ namespace SynapseAddinLoader.UI.SynapseInventory
         public ObservableCollection<SynapseViewModel> Synapses { get; }
 
         public ICommand LoadSynapsesFromFileCommand => new RelayCommand(_ => LoadAssemblyFiles());
-        public ICommand RemoveSelectedSynapseCommand => new RelayCommand(_=>RemoveSynapse(selectedSynapseId));
-        
+        public ICommand RemoveSelectedSynapseCommand => new RelayCommand(_ => RemoveSynapse(selectedSynapseId));
+
         public ICommand OnSynapseSelectionChangedCommand => new RelayCommand(UpdateSelectedSynapse);
 
         public SynapseInventoryControlViewModel(IEnumerable<SynapseViewModel> synapses)
@@ -48,6 +48,7 @@ namespace SynapseAddinLoader.UI.SynapseInventory
 
             selectedSynapseId = synapseSelection.Id;
             SynapseMethodPlayer.SelectedSynapseName = synapseSelection.Name;
+            SynapseMethodPlayer.SelectedSynapseSourceFilePath = synapseSelection.SourceFilePath;
             SynapseMethodPlayer.SynapseMethods = new ObservableCollection<SynapseMethodViewModel>(synapseSelection.GetRevitMethodsFromSynapse());
         }
 
@@ -70,7 +71,7 @@ namespace SynapseAddinLoader.UI.SynapseInventory
             {
                 LoadAssemblyFile(assemblyPath);
             }
-            
+
             //todo save user settings
         }
 
@@ -83,39 +84,49 @@ namespace SynapseAddinLoader.UI.SynapseInventory
             }
 
             UIApplication uiapp = App.UiApplication;
-            IList<SynapseViewModel> synapsesFromAssembly = ParseSynapsesFromAssembly(uiapp, assemblyPath);
+
+            IList<SynapseViewModel> synapsesFromAssembly = new List<SynapseViewModel>();
+
+            try
+            {
+                synapsesFromAssembly = ParseSynapsesFromAssembly(uiapp, assemblyPath);
+            }
+            catch (Exception ex)
+            {
+                //todo log error
+
+            }
+
             foreach (SynapseViewModel synapseViewModel in synapsesFromAssembly)
             {
                 int insertionIndex = Synapses.Count; // insert at end by default
-                try
+                var synapseTypeToRegister = synapseViewModel.GetRevitSynapseType();
+                IRevitSynapse temporaryRevitSynapse =
+                    Common.ConstructTemporaryRevitSynapse(uiapp, synapseTypeToRegister);
+                if (Synapses.FirstOrDefault(s => s.Id.Equals(synapseViewModel.Id)) is SynapseViewModel
+                    previouslyAddedSynapse)
                 {
-                    var synapseTypeToRegister = synapseViewModel.GetRevitSynapseType();
-                    IRevitSynapse temporaryRevitSynapse =
-                        Common.ConstructTemporaryRevitSynapse(uiapp, synapseTypeToRegister);
-                    if (Synapses.FirstOrDefault(s => s.Id.Equals(synapseViewModel.Id)) is SynapseViewModel
-                        previouslyAddedSynapse)
-                    {
-                        SynapseRevitService.DeregisterSynapse(temporaryRevitSynapse);
-                        // synapse (or one with the same id) has been added before
-                        // assume its the same synapse being updated
-                        insertionIndex = Synapses.IndexOf(previouslyAddedSynapse);
-                        Synapses.Remove(previouslyAddedSynapse);
-                    }
-
-                    //! register in synapse
-                    SynapseRevitService.RegisterSynapse(temporaryRevitSynapse);
-
-                    Synapses.Insert(insertionIndex, synapseViewModel);
+                    SynapseRevitService.DeregisterSynapse(temporaryRevitSynapse);
+                    // synapse (or one with the same id) has been added before
+                    // assume its the same synapse being updated
+                    insertionIndex = Synapses.IndexOf(previouslyAddedSynapse);
+                    Synapses.Remove(previouslyAddedSynapse);
                 }
-                catch (Exception ex)
-                {
-                    //todo log error
-                }
+
+                //! register in synapse
+                SynapseRevitService.RegisterSynapse(temporaryRevitSynapse);
+
+                Synapses.Insert(insertionIndex, synapseViewModel);
             }
         }
 
         private IList<SynapseViewModel> ParseSynapsesFromAssembly(UIApplication uiapp, string assemblyPath)
         {
+            if (!File.Exists(assemblyPath))
+            {
+                return new List<SynapseViewModel>();
+            }
+
             LoadSynapses loadSynapses = new LoadSynapses(assemblyPath);
             IList<Core.Synapse> synapsesFromFile = loadSynapses.GetSynapsesFromFile(uiapp);
 
@@ -127,7 +138,7 @@ namespace SynapseAddinLoader.UI.SynapseInventory
 
             return synapseViewModels;
         }
-        
+
         private void RemoveSynapse(object obj)
         {
             //if (obj is not SynapseViewModel synapseToRemove)

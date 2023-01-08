@@ -36,7 +36,10 @@ namespace SynapseAddinLoader.UI.SynapseMethodPlayer
 
                 //todo verify parameters
                 IEnumerable<string> inputParametersAsStrings = synapseMethodToRun.InputParameters.Select(p => p.Value);
-
+                if (!inputParametersAsStrings.Any())
+                {
+                    inputParametersAsStrings = null;
+                }
                 string responseFromRevit = App.TryDoRevit(synapseMethodToRun.MethodId, inputParametersAsStrings);
             }
             catch (Exception ex)

@@ -7,16 +7,16 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-
+using System.Windows.Interop;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 using Synapse.Revit;
-
-using Revit.Async;
 using Synapse;
+
 using SynapseAddinLoader.UI;
+
 
 namespace SynapseAddinLoader
 {
@@ -32,14 +32,14 @@ namespace SynapseAddinLoader
                !synapseAddinLoaderWindow.IsVisible)
             {
                 SynapseRevitService.Initialize();
-                RevitTask.Initialize(commandData.Application);
 
                 string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                
+
                 synapseAddinLoaderWindow = new MainWindow()
                 {
                     DataContext = new MainWindowViewModel($"Synapse Addin Loader v{assemblyVersion}")
                 };
+                _ = new WindowInteropHelper(synapseAddinLoaderWindow) { Owner = commandData.Application.MainWindowHandle };
 
                 synapseAddinLoaderWindow.Show();
             }

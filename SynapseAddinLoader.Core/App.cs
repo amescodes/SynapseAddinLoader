@@ -24,7 +24,7 @@ namespace SynapseAddinLoader.Core
         /// <returns></returns>
         public static string TryDoRevit(string methodId, params object[] inputParametersAsStrings)
         {
-            return client.TryDoRevit<dynamic>(methodId, out _, inputParametersAsStrings);
+            return client.TryDoRevit<object>(methodId, out _, inputParametersAsStrings);
         }
 
         public static T TryDoRevit<T>(string methodId, out string jsonResponse, params object[] inputParametersAsStrings)
@@ -41,7 +41,7 @@ namespace SynapseAddinLoader.Core
 
         public static void ShutdownSynapseClient()
         {
-            client.Shutdown();
+            client?.Shutdown();
         }
     }
 }

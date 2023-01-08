@@ -18,6 +18,8 @@ namespace SynapseAddinLoader.UI
     {
         public MainWindow()
         {
+            App.StartSynapseClient();
+
             InitializeAssemblyReferences();
             InitializeComponent();
         }

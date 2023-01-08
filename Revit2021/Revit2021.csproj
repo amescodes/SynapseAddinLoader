@@ -20,4 +20,5 @@
   <ItemGroup Condition="$(DefineConstants.Contains('WINFORMS'))">
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
+
 </Project>

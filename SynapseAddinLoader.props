@@ -33,4 +33,8 @@
 		<ProjectReference Include="..\SynapseAddinLoader.UI\SynapseAddinLoader.UI.csproj" />
 	</ItemGroup>
 
+	<!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="nuke CopyToAddinDirectory" />
+	</Target>-->
+
 </Project>

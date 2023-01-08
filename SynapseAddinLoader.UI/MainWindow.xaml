@@ -9,6 +9,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="{Binding WindowName}" 
+        WindowStartupLocation="CenterOwner"
         MinHeight="450"
         Height="450" 
         MinWidth="400"

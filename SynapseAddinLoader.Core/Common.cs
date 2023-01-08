@@ -20,7 +20,7 @@ namespace SynapseAddinLoader.Core
             {
                 ParameterInfo[] constructorParameters = constructorInfo.GetParameters();
                 if (constructorParameters.Length != 1 ||
-                    constructorParameters.FirstOrDefault()?.ParameterType != typeof(UIApplication))
+                    constructorParameters.FirstOrDefault()?.ParameterType.Name != nameof(UIApplication))
                 {
                     continue;
                 }
