@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Synapse;
 using SynapseAddinLoader.Core;
 using SynapseAddinLoader.UI.SynapseInventory;
+
+using Synapse;
 
 namespace SynapseAddinLoader.UI.SynapseMethodPlayer
 {
@@ -20,8 +21,8 @@ namespace SynapseAddinLoader.UI.SynapseMethodPlayer
 
         public ObservableCollection<SynapseMethodViewModel> SynapseMethods { get; set; }
 
-        public ICommand RunRevitMethodCommand => new RelayCommand(RunRevitMethod);
-
+        public ICommand RunRevitMethodCommand => new RelayCommand(x => RunRevitMethod(x));
+        
         private void RunRevitMethod(object obj)
         {
             if (obj is not SynapseMethodViewModel synapseMethodToRun)
@@ -40,7 +41,13 @@ namespace SynapseAddinLoader.UI.SynapseMethodPlayer
                 {
                     inputParametersAsStrings = null;
                 }
-                string responseFromRevit = App.TryDoRevit(synapseMethodToRun.MethodId, inputParametersAsStrings);
+
+                Autodesk.Windows.ComponentManager.Ribbon.Dispatcher.Invoke(() =>
+                {
+                    string responseFromRevit = App.TryDoRevit(synapseMethodToRun.MethodId, inputParametersAsStrings);
+                });
+                //string responseFromRevit =  App.TryDoRevit(synapseMethodToRun.MethodId, inputParametersAsStrings);
+
             }
             catch (Exception ex)
             {

@@ -10,6 +10,8 @@ using static SynapseAddinLoader.Core.Common;
 
 using Synapse.Revit;
 using Autodesk.Revit.UI;
+using static Autodesk.Internal.Windows.SwfMediaPlayer;
+using System.Threading.Tasks;
 
 namespace SynapseAddinLoader.Core
 {
@@ -34,7 +36,7 @@ namespace SynapseAddinLoader.Core
             foreach (Type t in assemblyFromPath.ExportedTypes)
             {
                 Type[] interfaces = t.GetInterfaces();
-                if (interfaces.Select(i=>i.Name.ToString()).Contains(nameof(IRevitSynapse)))
+                if (interfaces.Select(i => i.Name.ToString()).Contains(nameof(IRevitSynapse)))
                 {
                     foundSynapseTypes.Add(t);
                 }
@@ -45,6 +47,15 @@ namespace SynapseAddinLoader.Core
                 throw new SynapseAddinLoaderException("No IRevitSynapse types found in assembly.");
             }
 
+            IList<Synapse> synapses = MakeSynapsesFromFoundTypes(uiapp, foundSynapseTypes);
+
+            resolveAssembly.RemoveResolveAssemblyHandler();
+
+            return synapses;
+        }
+
+        private IList<Synapse> MakeSynapsesFromFoundTypes(UIApplication uiapp, IList<Type> foundSynapseTypes)
+        {
             IList<Synapse> synapses = new List<Synapse>();
             foreach (Type synapseType in foundSynapseTypes)
             {
@@ -52,14 +63,6 @@ namespace SynapseAddinLoader.Core
                 string synapseId = synapseType.GetRuntimeProperty(nameof(IRevitSynapse.Id)).GetValue(synapseToRegister) as string;
                 synapses.Add(new Synapse(assemblyPath, synapseId, synapseType));
             }
-
-            //// add other assemblies from same directory
-            //foreach (string foundAssemblyInDirectory in Directory.GetFiles(assemblyDirectory, "*.dll", SearchOption.AllDirectories))
-            //{
-            //    resolveAssembly.LoadFromPath(foundAssemblyInDirectory);
-            //}
-
-            resolveAssembly.RemoveResolveAssemblyHandler();
 
             return synapses;
         }

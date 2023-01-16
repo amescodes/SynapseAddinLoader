@@ -24,8 +24,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Autodesk.Revit.SDK" Version="$(RevitVersion).*" />
-		<PackageReference Include="Revit.Async" Version="2.0.1" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<!--<PackageReference Include="Revit.Async" Version="2.0.1" />-->
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Reflection;
 using System.Windows.Interop;
+
+using SynapseAddinLoader.Core;
+using SynapseAddinLoader.UI;
+
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
+using Revit.Async;
 using Synapse.Revit;
-using Synapse;
-
-using SynapseAddinLoader.UI;
-
 
 namespace SynapseAddinLoader
 {
@@ -31,7 +23,11 @@ namespace SynapseAddinLoader
             if (synapseAddinLoaderWindow == null ||
                !synapseAddinLoaderWindow.IsVisible)
             {
-                SynapseRevitService.Initialize();
+                UIApplication uiapp = commandData.Application;
+                App.UiApplication = uiapp;
+
+                SynapseRevitService.Initialize(uiapp);
+                RevitTask.Initialize(uiapp);
 
                 string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -39,7 +35,7 @@ namespace SynapseAddinLoader
                 {
                     DataContext = new MainWindowViewModel($"Synapse Addin Loader v{assemblyVersion}")
                 };
-                _ = new WindowInteropHelper(synapseAddinLoaderWindow) { Owner = commandData.Application.MainWindowHandle };
+                _ = new WindowInteropHelper(synapseAddinLoaderWindow) { Owner = uiapp.MainWindowHandle };
 
                 synapseAddinLoaderWindow.Show();
             }

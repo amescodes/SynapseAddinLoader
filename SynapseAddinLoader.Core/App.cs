@@ -14,8 +14,6 @@ namespace SynapseAddinLoader.Core
     {
         private static SynapseClient client;
 
-        public static UIApplication UiApplication { get; set; }
-
         /// <summary>
         /// Returns a JSON string.
         /// </summary>

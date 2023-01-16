@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autodesk.Revit.SDK" Version="2021.1.40.95" />
+
     <!--<PackageReference Include="Synapse.Revit" Version="0.1.1-alpha0038" />-->
     <!--<PackageReference Include="Synapse.Client" Version="0.1.1-alpha0038" /-->
   </ItemGroup>
@@ -19,6 +20,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Synapse\Synapse.Client\Synapse.Client.csproj" />
     <ProjectReference Include="..\..\Synapse\Synapse.Revit\Synapse.Revit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
 
 </Project>

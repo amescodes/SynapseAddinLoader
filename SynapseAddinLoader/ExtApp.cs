@@ -13,6 +13,8 @@ namespace SynapseAddinLoader
 {
     public class ExtApp : IExternalApplication
     {
+        public static UIApplication UiApplication { get; set; }
+
         public Result OnStartup(UIControlledApplication application)
         {
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
