@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="SynapseAddinLoader.Client.SynapseInventory.SynapseMethodPlayerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:synapseInventory="clr-namespace:SynapseAddinLoader.Client.SynapseInventory"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:client="clr-namespace:SynapseAddinLoader.Client"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="280"
+             d:DataContext="{d:DesignInstance synapseInventory:SynapseViewModel}">
+    <Grid Margin="8 12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Margin="0 0 0  8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding Name, Mode=OneWay}"
+                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                     materialDesign:HintAssist.Hint="Selected Synapse"
+                     materialDesign:HintAssist.IsFloating="True"
+                     Height="32"
+                     Margin="0 0 4 0"
+                     Padding="4"
+                     VerticalContentAlignment="Center"
+                     IsReadOnly="True"
+                     IsReadOnlyCaretVisible="False" />
+            <Button Grid.Column="1"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType=client:MainWindow}, Path=DataContext.(synapseInventory:SynapseInventoryControlViewModel.RemoveSynapseCommand)}"
+                    Style="{DynamicResource MaterialDesignFlatSecondaryDarkButton}"
+                    Width="30"
+                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center">
+                <materialDesign:PackIcon Kind="TrashCan"
+                                         Width="20"
+                                         Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}" />
+            </Button>
+        </Grid>
+
+        <ItemsControl Grid.Row="1"
+                      ItemsSource="{Binding Methods}"
+                      Padding="4 0"
+                      d:ItemsSource="{d:SampleData ItemCount=2}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type synapseInventory:SynapseMethodViewModel}">
+                    <materialDesign:Card Margin="0 0 0 8"
+                                         Padding="12 16">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding Name}"
+                                       Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
+                                       Margin="0 -4 0 4"
+                                       ToolTip="Name of the method from the selected Synapse." />
+
+                            <Button Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0 0 12 0"
+                                    Style="{DynamicResource MaterialDesignFloatingActionMiniDarkButton}"
+                                    Command="{Binding RunRevitMethodCommand}">
+
+                                <materialDesign:PackIcon Kind="Play"
+                                                         Width="20"
+                                                         Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}" />
+                            </Button>
+
+                            <ItemsControl Grid.Row="1"
+                                          Grid.Column="1"
+                                          ItemTemplate="{StaticResource synapseMethodInputParameterDataTemplate}"
+                                          ItemsSource="{Binding InputParameters}"
+                                          d:ItemsSource="{d:SampleData ItemCount=4}"/>
+
+                            <materialDesign:Card Grid.Column="1"
+                                                 Grid.Row="2"
+                                                 MinHeight="64"
+                                                 MaxHeight="120">
+                                <ItemsControl ItemsSource="{Binding LatestResponses}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type system:String}">
+                                            <TextBlock Text="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:Card>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
+
+    </Grid>
+</UserControl>

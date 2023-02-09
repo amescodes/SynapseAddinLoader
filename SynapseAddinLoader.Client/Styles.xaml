@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:synapseInventory="clr-namespace:SynapseAddinLoader.Client.SynapseInventory">
+
+    <DataTemplate x:Key="synapseMethodInputParameterDataTemplate"
+                  DataType="{x:Type synapseInventory:SynapseMethodInputParameterViewModel}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="70" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       VerticalAlignment="Center"
+                       TextWrapping="Wrap">
+                <Run Text="{Binding Name, Mode=OneWay}"
+                     FontWeight="DemiBold"
+                     ToolTip="Name of the input parameter." />
+                <Run Text="{Binding TypeName, Mode=OneWay}"
+                     FontStyle="Italic"
+                     FontSize="10"
+                     ToolTip="Class/Type of the input parameter." />
+            </TextBlock>
+
+            <TextBox Grid.Column="1"
+                     VerticalAlignment="Center"
+                     Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                     Padding="2"
+                     ToolTip="Value to set the input parameter." />
+        </Grid>
+    </DataTemplate>
+
+
+</ResourceDictionary>

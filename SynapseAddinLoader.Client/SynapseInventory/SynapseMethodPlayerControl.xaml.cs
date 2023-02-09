@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace SynapseAddinLoader.Client.SynapseMethodPlayer
+namespace SynapseAddinLoader.Client.SynapseInventory
 {
     /// <summary>
     /// Interaction logic for SynapseRevitMethodPlayerControl.xaml

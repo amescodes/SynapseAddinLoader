@@ -7,8 +7,8 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using FileDialog = Microsoft.Win32.FileDialog;
 
-using SynapseAddinLoader.Client.SynapseMethodPlayer;
 using SynapseAddinLoader.Core;
+using SynapseAddinLoader.Core.Domain;
 
 using Synapse.Shared;
 
@@ -18,41 +18,16 @@ namespace SynapseAddinLoader.Client.SynapseInventory
 {
     public class SynapseInventoryControlViewModel : ViewModelBase
     {
-        private string selectedSynapseId = "";
-
-        public SynapseMethodPlayerControlViewModel SynapseMethodPlayer { get; }
         public ObservableCollection<SynapseViewModel> Synapses { get; }
 
         public ICommand LoadSynapsesFromFileCommand => new RelayCommand(_ => LoadAssemblyFiles());
-        public ICommand RemoveSelectedSynapseCommand => new RelayCommand(_ => RemoveSynapse(selectedSynapseId));
-
-        public ICommand OnSynapseSelectionChangedCommand => new RelayCommand(UpdateSelectedSynapse);
-
+        public ICommand RemoveSynapseCommand => new RelayCommand(RemoveSynapse);
+        
         public SynapseInventoryControlViewModel(IEnumerable<SynapseViewModel> synapses)
         {
             Synapses = new ObservableCollection<SynapseViewModel>(synapses);
-            SynapseMethodPlayer = new SynapseMethodPlayerControlViewModel();
         }
-
-        private void UpdateSelectedSynapse(object obj)
-        {
-            if (obj is not SynapseViewModel synapseSelection ||
-                synapseSelection.Id.Equals(selectedSynapseId))
-            {
-                return;
-            }
-
-            UpdateCurrentSelectionInPlayer(synapseSelection);
-        }
-
-        private void UpdateCurrentSelectionInPlayer(SynapseViewModel synapseSelection)
-        {
-            selectedSynapseId = synapseSelection.Id;
-            SynapseMethodPlayer.SelectedSynapseName = synapseSelection.Name;
-            SynapseMethodPlayer.SelectedSynapseSourceFilePath = synapseSelection.SourceFilePath;
-            SynapseMethodPlayer.SynapseMethods = new ObservableCollection<SynapseMethodViewModel>(synapseSelection.GetRevitMethodsFromSynapse());
-        }
-
+        
         private void LoadAssemblyFiles()
         {
             FileDialog fileDialog = new OpenFileDialog()
@@ -89,17 +64,7 @@ namespace SynapseAddinLoader.Client.SynapseInventory
                 IList<SynapseViewModel> synapsesFromAssembly = ParseSynapsesFromAssembly(assemblyPath);
                 foreach (SynapseViewModel synapseViewModel in synapsesFromAssembly)
                 {
-                    int insertionIndex = Synapses.Count; // insert at end by default
-                    if (Synapses.FirstOrDefault(s => s.Id.Equals(synapseViewModel.Id)) is SynapseViewModel
-                        previouslyAddedSynapse)
-                    {
-                        // synapse (or one with the same id) has been added before
-                        // assume its the same synapse being updated
-                        insertionIndex = Synapses.IndexOf(previouslyAddedSynapse);
-                        Synapses.Remove(previouslyAddedSynapse);
-                    }
-
-                    Synapses.Insert(insertionIndex, synapseViewModel);
+                    AddSynapse(synapseViewModel);
                 }
             }
             catch (Exception ex)
@@ -108,7 +73,7 @@ namespace SynapseAddinLoader.Client.SynapseInventory
 
             }
         }
-
+        
         private IList<SynapseViewModel> ParseSynapsesFromAssembly(string assemblyPath)
         {
             if (!File.Exists(assemblyPath))
@@ -132,26 +97,61 @@ namespace SynapseAddinLoader.Client.SynapseInventory
             IList<SynapseViewModel> synapseViewModels = new List<SynapseViewModel>();
             foreach (Core.Domain.Synapse synapse in synapsesFromFile)
             {
-                synapseViewModels.Add(new SynapseViewModel(synapse));
+                IEnumerable<SynapseMethodViewModel> revitMethodsFromSynapse = GetRevitMethodsFromSynapse(synapse);
+                SynapseViewModel synapseViewModel = new SynapseViewModel(synapse)
+                {
+                    Methods = new ObservableCollection<SynapseMethodViewModel>(revitMethodsFromSynapse)
+                };
+                synapseViewModels.Add(synapseViewModel);
             }
 
             return synapseViewModels;
         }
 
+        private IEnumerable<SynapseMethodViewModel> GetRevitMethodsFromSynapse(Core.Domain.Synapse synapse)
+        {
+            foreach (SynapseMethod synapseMethod in synapse.Methods)
+            {
+                IList<SynapseMethodInputParameterViewModel> inputParameterViewModels = new List<SynapseMethodInputParameterViewModel>();
+                foreach (var methodParameter in synapseMethod.Parameters)
+                {
+                    SynapseMethodInputParameterViewModel inputParameterViewModel = new SynapseMethodInputParameterViewModel(methodParameter.Name, methodParameter.Type.Name)
+                    {
+                        Value = methodParameter.Value?.ToString() ?? ""
+                    };
+
+                    inputParameterViewModels.Add(inputParameterViewModel);
+                }
+
+                yield return new SynapseMethodViewModel(synapseMethod.Id, synapseMethod.Name, inputParameterViewModels, synapseMethod.ReturnType);
+            }
+        }
+        
+        private void AddSynapse(SynapseViewModel synapseViewModel)
+        {
+            int insertionIndex = Synapses.Count; // insert at end by default
+            if (Synapses.FirstOrDefault(s => s.Id.Equals(synapseViewModel.Id)) is SynapseViewModel
+                previouslyAddedSynapse)
+            {
+                // synapse (or one with the same id) has been added before
+                // assume its the same synapse being updated
+                insertionIndex = Synapses.IndexOf(previouslyAddedSynapse);
+                Synapses.Remove(previouslyAddedSynapse);
+            }
+
+            Synapses.Insert(insertionIndex, synapseViewModel);
+
+            //todo save user settings
+        }
+
         private void RemoveSynapse(object obj)
         {
-            if (obj is not string synapseIdToRemove)
+            if (obj is not SynapseViewModel synapseToRemove)
             {
                 return;
             }
-
-            SynapseViewModel foundSynapse = Synapses.FirstOrDefault(s => s.Id.Equals(synapseIdToRemove));
-            if (foundSynapse == null)
-            {
-                return;
-            }
-
-            Synapses.Remove(foundSynapse);
+            
+            Synapses.Remove(synapseToRemove);
 
             //todo save user settings
         }

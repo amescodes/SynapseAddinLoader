@@ -10,16 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Page Remove="MaterialDesign.xaml" />
+    <Compile Remove="SynapseMethodPlayer\**" />
+    <EmbeddedResource Remove="SynapseMethodPlayer\**" />
+    <None Remove="SynapseMethodPlayer\**" />
+    <Page Remove="SynapseMethodPlayer\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="SynapseInventory\SynapseInventoryControl.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="SynapseMethodPlayer\SynapseMethodPlayerControl.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Remove="MaterialDesign.xaml" />
   </ItemGroup>
 
 	<ItemGroup>

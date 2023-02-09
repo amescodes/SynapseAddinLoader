@@ -23,31 +23,7 @@ namespace SynapseAddinLoader.Client.SynapseMethodPlayer
         
         private void RunRevitMethod(object obj)
         {
-            if (obj is not SynapseMethodViewModel synapseMethodToRun)
-            {
-                return;
-            }
 
-            try
-            {
-                //todo verify parameters
-                IEnumerable<string> inputParametersAsStrings = synapseMethodToRun.InputParameters.Select(p => p.Value);
-                if (!inputParametersAsStrings.Any())
-                {
-                    inputParametersAsStrings = null;
-                }
-
-                //Autodesk.Windows.ComponentManager.Ribbon.Dispatcher.Invoke(() =>
-                //{
-                //    string responseFromRevit = App.TryDoRevit(synapseMethodToRun.MethodId, inputParametersAsStrings);
-                //}
-                string responseFromRevit = App.TryDoRevit(synapseMethodToRun.MethodId, inputParametersAsStrings);
-
-            }
-            catch (Exception ex)
-            {
-
-            }
             finally
             {
 

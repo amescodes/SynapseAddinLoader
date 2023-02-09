@@ -39,6 +39,8 @@
                     <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="{StaticResource Primary400Foreground}"/>
                 </ResourceDictionary>
 
+                <ResourceDictionary Source="Styles.xaml"/>
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

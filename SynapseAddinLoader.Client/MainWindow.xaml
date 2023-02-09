@@ -5,31 +5,76 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:synapseInventory="clr-namespace:SynapseAddinLoader.Client.SynapseInventory"
-        xmlns:synapseMethodPlayer="clr-namespace:SynapseAddinLoader.Client.SynapseMethodPlayer"
         mc:Ignorable="d"
         MinHeight="450"
-        Height="450" 
+        Height="450"
         MinWidth="400"
         Width="600">
-    <Grid>
+
+    <Grid DataContext="{Binding InventoryControl}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" MinWidth="200"/>
+            <ColumnDefinition Width="5*"
+                              MinWidth="200" />
 
             <!--SPLITTER-->
-            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="5" />
 
-            <ColumnDefinition Width="4*" MinWidth="200"/>
+            <ColumnDefinition Width="4*"
+                              MinWidth="200" />
         </Grid.ColumnDefinitions>
 
-        <synapseInventory:SynapseInventoryControl DataContext="{Binding InventoryControl}"
-                                                  Grid.Column="0"/>
+        <Grid Grid.Column="0"
+              Margin="8 12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ListView Name="inventoryListView"
+                      Grid.Row="1"
+                      ItemsSource="{Binding Synapses}"
+                      Style="{DynamicResource MaterialDesignListView}"
+                      Margin="0 8"
+                      materialDesign:ListViewAssist.ListViewItemPadding="4"
+                      d:ItemsSource="{d:SampleData ItemCount=15}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style>
+                                <Setter Property="GridViewColumnHeader.Padding"
+                                        Value="4" />
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Header="Synapse"
+                                        DisplayMemberBinding="{Binding Name}"
+                                        Width="140" />
+                        <GridViewColumn Header="Source File Path"
+                                        Width="400"
+                                        DisplayMemberBinding="{Binding SourceFilePath}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button Grid.Row="2"
+                    Command="{Binding LoadSynapsesFromFileCommand}"
+                    Style="{DynamicResource MaterialDesignFloatingActionButton}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center">
+                <materialDesign:PackIcon Kind="Upload"
+                                         Width="32"
+                                         Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}" />
+            </Button>
+        </Grid>
 
         <!--SPLITTER-->
-        <GridSplitter Grid.Column="1" 
-                      Style="{DynamicResource MaterialDesignGridSplitter}"/>
+        <GridSplitter Grid.Column="1"
+                      Style="{DynamicResource MaterialDesignGridSplitter}" />
 
-        <synapseMethodPlayer:SynapseMethodPlayerControl Grid.Column="2"
-                                                        DataContext="{Binding InventoryControl.SynapseMethodPlayer}"/>
-
+        <synapseInventory:SynapseMethodPlayerControl Grid.Column="2"
+                                                     DataContext="{Binding ElementName=inventoryListView, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>
+
 </Window>
