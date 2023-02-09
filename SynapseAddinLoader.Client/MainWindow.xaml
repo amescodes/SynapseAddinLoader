@@ -1,0 +1,35 @@
+﻿<Window x:Class="SynapseAddinLoader.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:synapseInventory="clr-namespace:SynapseAddinLoader.Client.SynapseInventory"
+        xmlns:synapseMethodPlayer="clr-namespace:SynapseAddinLoader.Client.SynapseMethodPlayer"
+        mc:Ignorable="d"
+        MinHeight="450"
+        Height="450" 
+        MinWidth="400"
+        Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*" MinWidth="200"/>
+
+            <!--SPLITTER-->
+            <ColumnDefinition Width="5"/>
+
+            <ColumnDefinition Width="4*" MinWidth="200"/>
+        </Grid.ColumnDefinitions>
+
+        <synapseInventory:SynapseInventoryControl DataContext="{Binding InventoryControl}"
+                                                  Grid.Column="0"/>
+
+        <!--SPLITTER-->
+        <GridSplitter Grid.Column="1" 
+                      Style="{DynamicResource MaterialDesignGridSplitter}"/>
+
+        <synapseMethodPlayer:SynapseMethodPlayerControl Grid.Column="2"
+                                                        DataContext="{Binding InventoryControl.SynapseMethodPlayer}"/>
+
+    </Grid>
+</Window>

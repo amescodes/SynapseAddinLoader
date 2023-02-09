@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<Target Condition="$(Configuration) != 'Debug' And $(Configuration) != 'Release' " Name="PostBuild" AfterTargets="PostBuildEvent" >
+		<Exec Command="nuke CopyToAddinDirectory --revit-version $(RevitVersion)" />
+	</Target>
+
+</Project>

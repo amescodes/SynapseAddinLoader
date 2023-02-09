@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" Sdk="Microsoft.NET.Sdk">
 	
   <Import Project="..\SynapseAddinLoader.props" />
-  <Import Project="..\SynapseAddinLoader\SynapseAddinLoader.projitems" Label="Shared" />
+  <Import Project="..\SynapseAddinLoader.Revit\SynapseAddinLoader.Revit.projitems" Label="Shared" />
 
   <PropertyGroup>
     <TargetFrameworks>net48</TargetFrameworks>

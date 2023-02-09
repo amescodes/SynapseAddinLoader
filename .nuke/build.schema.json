@@ -62,6 +62,10 @@
             "type": "string"
           }
         },
+        "RevitVersion": {
+          "type": "string",
+          "description": "Revit version to build for debug"
+        },
         "Root": {
           "type": "string",
           "description": "Root directory during build execution"
@@ -77,6 +81,7 @@
               "Compile2022",
               "Compile2023",
               "CompileAll",
+              "CompileClient",
               "CopyToAddinDirectory",
               "Debug2021",
               "Debug2022",
@@ -100,6 +105,7 @@
               "Compile2022",
               "Compile2023",
               "CompileAll",
+              "CompileClient",
               "CopyToAddinDirectory",
               "Debug2021",
               "Debug2022",

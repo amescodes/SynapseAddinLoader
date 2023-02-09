@@ -7,18 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revit2021", "Revit2021\Revi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revit2022", "Revit2022\Revit2022.csproj", "{7C291FAA-D75F-4209-B3E4-5E2CCD8D51DD}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SynapseAddinLoader", "SynapseAddinLoader\SynapseAddinLoader.shproj", "{4F610BF5-201E-4193-B3F5-6424CD53E46C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revit2023", "Revit2023\Revit2023.csproj", "{44E664A3-20C1-4933-B50A-AA735DC42F1F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RevitVersions", "RevitVersions", "{783BBB41-2612-4BEC-B389-F8E6F616CD4E}"
 	ProjectSection(SolutionItems) = preProject
 		SynapseAddinLoader.props = SynapseAddinLoader.props
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SynapseAddinLoader.UI", "SynapseAddinLoader.UI\SynapseAddinLoader.UI.csproj", "{F4606B4D-3D72-4525-B817-FEBE9945DFDF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SynapseAddinLoader.Core", "SynapseAddinLoader.Core\SynapseAddinLoader.Core.csproj", "{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{FEA7EFCA-8E03-4089-B022-8A90CF3BD54C}"
 EndProject
@@ -28,7 +22,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Client", "..\Synaps
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Revit", "..\Synapse\Synapse.Revit\Synapse.Revit.csproj", "{A55A537B-0E2C-4FD6-A2F4-CF838AEDCB4A}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Revit.Async.Shared", "..\Revit.Async\Revit.Async.Shared\Revit.Async.Shared.shproj", "{26214B67-5134-4C0A-86A6-51128E71AFE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SynapseAddinLoader.Client", "SynapseAddinLoader.Client\SynapseAddinLoader.Client.csproj", "{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SynapseAddinLoader.Core", "SynapseAddinLoader.Core\SynapseAddinLoader.Core.csproj", "{F780580D-BC6B-411A-997C-D1DEEA68D5BF}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SynapseAddinLoader.Revit", "SynapseAddinLoader.Revit\SynapseAddinLoader.Revit.shproj", "{4F610BF5-201E-4193-B3F5-6424CD53E46C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Synapse.Shared", "..\Synapse\Synapse.Shared\Synapse.Shared.shproj", "{12C74D60-3039-495F-B35D-67DAC8FC1F88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,26 +63,6 @@ Global
 		{44E664A3-20C1-4933-B50A-AA735DC42F1F}.Debug|x64.Build.0 = Debug|x64
 		{44E664A3-20C1-4933-B50A-AA735DC42F1F}.Release|x64.ActiveCfg = Release|x64
 		{44E664A3-20C1-4933-B50A-AA735DC42F1F}.Release|x64.Build.0 = Release|x64
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.2021|x64.ActiveCfg = Debug|Any CPU
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.2021|x64.Build.0 = Debug|Any CPU
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.2022|x64.ActiveCfg = Debug|Any CPU
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.2022|x64.Build.0 = Debug|Any CPU
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.2023|x64.ActiveCfg = Debug|Any CPU
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.2023|x64.Build.0 = Debug|Any CPU
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.Debug|x64.Build.0 = Debug|Any CPU
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.Release|x64.ActiveCfg = Release|Any CPU
-		{F4606B4D-3D72-4525-B817-FEBE9945DFDF}.Release|x64.Build.0 = Release|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.2021|x64.ActiveCfg = Debug|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.2021|x64.Build.0 = Debug|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.2022|x64.ActiveCfg = Debug|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.2022|x64.Build.0 = Debug|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.2023|x64.ActiveCfg = Debug|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.2023|x64.Build.0 = Debug|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.Debug|x64.Build.0 = Debug|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.Release|x64.ActiveCfg = Release|Any CPU
-		{E309DF63-FAEF-4AF2-93CA-5AC2EED03103}.Release|x64.Build.0 = Release|Any CPU
 		{FEA7EFCA-8E03-4089-B022-8A90CF3BD54C}.2021|x64.ActiveCfg = Debug|Any CPU
 		{FEA7EFCA-8E03-4089-B022-8A90CF3BD54C}.2022|x64.ActiveCfg = Debug|Any CPU
 		{FEA7EFCA-8E03-4089-B022-8A90CF3BD54C}.2023|x64.ActiveCfg = Debug|Any CPU
@@ -97,7 +77,6 @@ Global
 		{63B6A862-AE8D-424E-9D52-34B7C30B693D}.Debug|x64.ActiveCfg = Debug|x64
 		{63B6A862-AE8D-424E-9D52-34B7C30B693D}.Debug|x64.Build.0 = Debug|x64
 		{63B6A862-AE8D-424E-9D52-34B7C30B693D}.Release|x64.ActiveCfg = Release|x64
-		{63B6A862-AE8D-424E-9D52-34B7C30B693D}.Release|x64.Build.0 = Release|x64
 		{A55A537B-0E2C-4FD6-A2F4-CF838AEDCB4A}.2021|x64.ActiveCfg = Debug|x64
 		{A55A537B-0E2C-4FD6-A2F4-CF838AEDCB4A}.2021|x64.Build.0 = Debug|x64
 		{A55A537B-0E2C-4FD6-A2F4-CF838AEDCB4A}.2022|x64.ActiveCfg = Debug|x64
@@ -107,7 +86,26 @@ Global
 		{A55A537B-0E2C-4FD6-A2F4-CF838AEDCB4A}.Debug|x64.ActiveCfg = Debug|x64
 		{A55A537B-0E2C-4FD6-A2F4-CF838AEDCB4A}.Debug|x64.Build.0 = Debug|x64
 		{A55A537B-0E2C-4FD6-A2F4-CF838AEDCB4A}.Release|x64.ActiveCfg = Release|x64
-		{A55A537B-0E2C-4FD6-A2F4-CF838AEDCB4A}.Release|x64.Build.0 = Release|x64
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.2021|x64.ActiveCfg = Debug|Any CPU
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.2021|x64.Build.0 = Debug|Any CPU
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.2022|x64.ActiveCfg = Debug|Any CPU
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.2022|x64.Build.0 = Debug|Any CPU
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.2023|x64.ActiveCfg = Debug|Any CPU
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.2023|x64.Build.0 = Debug|Any CPU
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.Debug|x64.Build.0 = Debug|Any CPU
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.Release|x64.ActiveCfg = Release|Any CPU
+		{D54C3461-EAD0-4EA5-9EF3-D4A44299DBC7}.Release|x64.Build.0 = Release|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.2021|x64.ActiveCfg = Debug|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.2021|x64.Build.0 = Debug|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.2022|x64.ActiveCfg = Debug|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.2022|x64.Build.0 = Debug|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.2023|x64.ActiveCfg = Debug|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.2023|x64.Build.0 = Debug|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.Debug|x64.Build.0 = Debug|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.Release|x64.ActiveCfg = Release|Any CPU
+		{F780580D-BC6B-411A-997C-D1DEEA68D5BF}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,16 +116,18 @@ Global
 		{44E664A3-20C1-4933-B50A-AA735DC42F1F} = {783BBB41-2612-4BEC-B389-F8E6F616CD4E}
 		{63B6A862-AE8D-424E-9D52-34B7C30B693D} = {C00A8FC6-B4C3-45A1-86DD-F1EB5604677A}
 		{A55A537B-0E2C-4FD6-A2F4-CF838AEDCB4A} = {C00A8FC6-B4C3-45A1-86DD-F1EB5604677A}
+		{12C74D60-3039-495F-B35D-67DAC8FC1F88} = {C00A8FC6-B4C3-45A1-86DD-F1EB5604677A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B0E2198-8F5A-450D-AEF6-A25BE92743E7}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\Revit.Async\Revit.Async.Shared\Revit.Async.Shared.projitems*{26214b67-5134-4c0a-86a6-51128e71afe2}*SharedItemsImports = 13
-		SynapseAddinLoader\SynapseAddinLoader.projitems*{44e664a3-20c1-4933-b50a-aa735dc42f1f}*SharedItemsImports = 5
-		SynapseAddinLoader\SynapseAddinLoader.projitems*{4f610bf5-201e-4193-b3f5-6424cd53e46c}*SharedItemsImports = 13
-		SynapseAddinLoader\SynapseAddinLoader.projitems*{7c291faa-d75f-4209-b3e4-5e2ccd8d51dd}*SharedItemsImports = 5
-		SynapseAddinLoader\SynapseAddinLoader.projitems*{80c8f61c-4ba5-4284-9ff6-e2b527749438}*SharedItemsImports = 5
-		..\Revit.Async\Revit.Async.Shared\Revit.Async.Shared.projitems*{a55a537b-0e2c-4fd6-a2f4-cf838aedcb4a}*SharedItemsImports = 5
+		..\Synapse\Synapse.Shared\Synapse.Shared.projitems*{12c74d60-3039-495f-b35d-67dac8fc1f88}*SharedItemsImports = 13
+		SynapseAddinLoader.Revit\SynapseAddinLoader.Revit.projitems*{44e664a3-20c1-4933-b50a-aa735dc42f1f}*SharedItemsImports = 5
+		SynapseAddinLoader.Revit\SynapseAddinLoader.Revit.projitems*{4f610bf5-201e-4193-b3f5-6424cd53e46c}*SharedItemsImports = 13
+		..\Synapse\Synapse.Shared\Synapse.Shared.projitems*{63b6a862-ae8d-424e-9d52-34b7c30b693d}*SharedItemsImports = 5
+		SynapseAddinLoader.Revit\SynapseAddinLoader.Revit.projitems*{7c291faa-d75f-4209-b3e4-5e2ccd8d51dd}*SharedItemsImports = 5
+		SynapseAddinLoader.Revit\SynapseAddinLoader.Revit.projitems*{80c8f61c-4ba5-4284-9ff6-e2b527749438}*SharedItemsImports = 5
+		..\Synapse\Synapse.Shared\Synapse.Shared.projitems*{a55a537b-0e2c-4fd6-a2f4-cf838aedcb4a}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
